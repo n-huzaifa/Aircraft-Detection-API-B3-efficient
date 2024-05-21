@@ -36,7 +36,7 @@ def inference_single_image(model, image_path, plane_details):
 model_path = "./finalsave.h5"
 model = load_model(model_path)
 
-class_names = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,"f-35",20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39]
+class_names = ["A10","A400M","AG600","AV8B","B1","B2","B52","BE200","C130","C17","C5","E2","EF200","F117","F14","F15","F16","F18","F22","F35","F4","J20","JAS39","MQ39","MIG31","Mirage2000","RQ4","RAFALE","SR71","SU34","SU57","Torando","TU160","Tu95","U2","US2","V22","VULCAN","XB70","YF23"]
 plane_details = {
     class_names[0]: "Generation: 4th\nType: Attack Aircraft\nMax Speed: 0.56\nArmaments: Yes",
     class_names[1]: "Generation: 4th \nType: Transport Aircraft\nMax Speed: 0.72\nArmaments: No",
