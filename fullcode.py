@@ -4,39 +4,9 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
-def inference_single_image(model, image_path, plane_details):
-    img = cv2.imread(image_path)
-    img_copy = img.copy()
-
-    # Resize the image to match the input size of the model
-    img = cv2.resize(img, (224, 224))
-
-    # Preprocess the image
-    img_tensor = image.img_to_array(img)
-    img_tensor = np.expand_dims(img_tensor, axis=0)
-
-    # Perform inference
-    prediction = model.predict(img_tensor)
-    predicted_class = np.argmax(prediction, axis=1)[0]
-    predicted_class_name = class_names[predicted_class]
-    plane_detail = plane_details[predicted_class_name]
-
-    # Add a bounding box (a rectangle around the entire image)
-    cv2.rectangle(img_copy, (0, 0), (img_copy.shape[1], img_copy.shape[0]), (0, 255, 0), 2)
-
-    # Display the image with the bounding box, predicted class, and plane details
-    plt.figure(figsize=(10, 10))
-    plt.imshow(cv2.cvtColor(img_copy, cv2.COLOR_BGR2RGB))
-    plt.title(f"{predicted_class_name}\n{plane_detail}", fontsize=14, fontweight='bold')
-    plt.axis("off")
-    plt.show()
-
-    
-# Load the pre-trained model
-model_path = "./finalsave.h5"
-model = load_model(model_path)
 
 class_names = ["A10","A400M","AG600","AV8B","B1","B2","B52","BE200","C130","C17","C5","E2","EF200","F117","F14","F15","F16","F18","F22","F35","F4","J20","JAS39","MQ39","MIG31","Mirage2000","RQ4","RAFALE","SR71","SU34","SU57","Torando","TU160","Tu95","U2","US2","V22","VULCAN","XB70","YF23"]
+
 plane_details = {
     class_names[0]: "Generation: 4th\nType: Attack Aircraft\nMax Speed: 0.56\nArmaments: Yes",
     class_names[1]: "Generation: 4th \nType: Transport Aircraft\nMax Speed: 0.72\nArmaments: No",
@@ -77,9 +47,36 @@ plane_details = {
     class_names[36]: "Generation: N/A \nType: Tiltrotor\nMax Speed: 0.6\nArmaments: Yes",
     class_names[37]: "Generation: 2nd \nType: Bomber\nMax Speed: 0.96\nArmaments: Yes",
     class_names[38]: "Generation: 3rd \nType: Bomber\nMax Speed: 3.1\nArmaments: No",
-    class_names[39]: "Generation: 4th \nType: Stealth Fighter\nMax Speed: 1.8\nArmaments: Yes",
-    
+    class_names[39]: "Generation: 4th \nType: Stealth Fighter\nMax Speed: 1.8\nArmaments: Yes", 
 }
 
+def inference_single_image(image_path):
+    model = load_model("./finalsave.h5")
+    img = cv2.imread(image_path)
+    img_copy = img.copy()
+
+    # Resize the image to match the input size of the model
+    img = cv2.resize(img, (224, 224))
+
+    # Preprocess the image
+    img_tensor = image.img_to_array(img)
+    img_tensor = np.expand_dims(img_tensor, axis=0)
+
+    # Perform inference
+    prediction = model.predict(img_tensor)
+    predicted_class = np.argmax(prediction, axis=1)[0]
+    predicted_class_name = class_names[predicted_class]
+    plane_detail = plane_details[predicted_class_name]
+
+    # Add a bounding box (a rectangle around the entire image)
+    cv2.rectangle(img_copy, (0, 0), (img_copy.shape[1], img_copy.shape[0]), (0, 255, 0), 2)
+
+    # Display the image with the bounding box, predicted class, and plane details
+    plt.figure(figsize=(10, 10))
+    plt.imshow(cv2.cvtColor(img_copy, cv2.COLOR_BGR2RGB))
+    plt.title(f"{predicted_class_name}\n{plane_detail}", fontsize=14, fontweight='bold')
+    plt.axis("off")
+    plt.show()
+
 image_path = "./aircraft.jpg"
-inference_single_image(model, image_path, plane_details)
+inference_single_image( image_path)
