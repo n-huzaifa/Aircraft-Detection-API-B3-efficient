@@ -81,6 +81,5 @@ plane_details = {
     
 }
 
-# Example usage
 image_path = "./aircraft.jpg"
 inference_single_image(model, image_path, plane_details)
