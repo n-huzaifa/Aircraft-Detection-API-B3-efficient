@@ -78,5 +78,4 @@ def inference_single_image(image_path):
     plt.axis("off")
     plt.show()
 
-image_path = "./aircraft.jpg"
-inference_single_image( image_path)
+__all__ = ['inference_single_image']
