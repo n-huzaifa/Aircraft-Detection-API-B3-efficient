@@ -67,6 +67,7 @@ def inference_single_image(image_path):
     predicted_class = np.argmax(prediction, axis=1)[0]
     predicted_class_name = class_names[predicted_class]
     plane_detail = plane_details[predicted_class_name]
+    predicted_probability = np.max(prediction, axis=1)[0]
 
     # Add a bounding box (a rectangle around the entire image)
     cv2.rectangle(img_copy, (0, 0), (img_copy.shape[1], img_copy.shape[0]), (0, 255, 0), 2)
@@ -74,7 +75,7 @@ def inference_single_image(image_path):
     # Display the image with the bounding box, predicted class, and plane details
     plt.figure(figsize=(10, 10))
     plt.imshow(cv2.cvtColor(img_copy, cv2.COLOR_BGR2RGB))
-    plt.title(f"{predicted_class_name}\n{plane_detail}", fontsize=14, fontweight='bold')
+    plt.title(f"{predicted_class_name}({predicted_probability * 100:.2f}%)\n{plane_detail}", fontsize=14, fontweight='bold')
     plt.axis("off")
     plt.show()
 
