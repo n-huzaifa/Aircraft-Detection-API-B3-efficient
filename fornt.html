@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification</title>
+    <link rel="stylesheet" href="fornt.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AirCraft Classification</h1>
+            <span class="developer-info"></span>
+        </div>
+        <div class="upload-container">
+            <input type="file" id="fileInput" accept="image/*" required>
+            <label for="fileInput">
+                <span class="label-text">Choose File</span>
+                <i class="fas fa-upload"></i>
+            </label>
+            <button id="uploadButton" type="button">
+                <span class="button-text">Upload Image</span>
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+        </div>
+        <div class="image-preview" id="imagePreview">
+            <img src="" alt="Image Preview" id="imageElement" style="display: none;">
+        </div>
+        <div id="loadingSpinner" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Processing...
+        </div>
+        <div id="result"></div>
+        <div class="footer">
+            <p>&copy; AirCraft Image Classification</p>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+    <script src="fornt.js"></script>
+</body>
+</html>

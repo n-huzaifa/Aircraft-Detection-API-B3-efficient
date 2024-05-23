@@ -1,11 +1,11 @@
+import os
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-from pprint import pprint
 
-class_names = ["A10", "A400M", "AG600", "AV8B", "B1", "B2", "B52", "BE200", "C130", "C17", "C5", "E2", "EF200", "F117", "F14", "F15", "F16", "F18", "F22", "F35", "F4", "J20", "JAS39", "MQ39", "MIG31", "Mirage2000", "RQ4", "RAFALE", "SR71", "SU34", "SU57", "Torando", "TU160", "Tu95", "U2", "US2", "V22", "VULCAN", "XB70", "YF23"]
+class_names = ["A10","A400M","AG600","AV8B","B1","B2","B52","BE200","C130","C17","C5","E2","EF200","F117","F14","F15","F16","F18","F22","F35","F4","J20","JAS39","MQ39","MIG31","Mirage2000","RQ4","RAFALE","SR71","SU34","SU57","Torando","TU160","Tu95","U2","US2","V22","VULCAN","XB70","YF23"]
 
 plane_details = {
     class_names[0]: "Generation: 4th\nType: Attack Aircraft\nMax Speed: 0.56\nArmaments: Yes",
@@ -70,24 +70,11 @@ def inference_single_image(image_path):
     predicted_probability = np.max(prediction, axis=1)[0]
 
     # Add a bounding box (a rectangle around the entire image)
-    #cv2.rectangle(img_copy, (0, 0), (img_copy.shape[1], img_copy.shape[0]), (0, 255, 0), 2)
+    cv2.rectangle(img_copy, (0, 0), (img_copy.shape[1], img_copy.shape[0]), (0, 255, 0), 2)
 
-    # Display the image with the bounding box, predicted class, and plane details
-    #plt.figure(figsize=(12, 12))
-    #plt.imshow(cv2.cvtColor(img_copy, cv2.COLOR_BGR2RGB))
-    #plt.title(f"{predicted_class_name}({predicted_probability * 100:.2f}%)\n{plane_detail}", fontsize=15, fontweight='bold')
-    #plt.axis("off")
-    #plt.show()
+    # Save the image with the bounding box
+    result_image_path = os.path.join("uploads", f"result_{os.path.basename(image_path)}")
+    cv2.imwrite(result_image_path, img_copy)
 
-    # Print details using pprint
-    print({
-        "predicted_class_name": predicted_class_name,
-        "predicted_probability": predicted_probability,
-        "plane_detail": plane_detail
-    })
-
-    return {
-        "predicted_class_name": predicted_class_name,
-        "predicted_probability": predicted_probability,
-        "plane_detail": plane_detail
-    }
+    result_text = f"{predicted_class_name} ({predicted_probability * 100:.2f}%)\n{plane_detail}"
+    return result_image_path, result_text

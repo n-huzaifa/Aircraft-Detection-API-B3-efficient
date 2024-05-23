@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    background-color: rgba(44, 44, 44, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+}
+
+.developer-info {
+    font-size: 14px;
+    color: #999;
+}
+
+.upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+label, button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+label:hover, button:hover {
+    background: linear-gradient(to right, #ff4b2b, #ff416c);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+i {
+    margin-left: 10px;
+}
+
+.image-preview {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    border: 2px solid #fff;
+    border-radius: 5px;
+}
+
+#loadingSpinner {
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+#result {
+    background-color: rgba(51, 51, 51, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+}

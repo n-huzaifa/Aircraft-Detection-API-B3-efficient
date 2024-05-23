@@ -1,37 +1,29 @@
 import os
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from inference import inference_single_image
 
 app = FastAPI()
 
-# Allow requests from your Chrome extension's origin
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
-UPLOAD_FOLDER = "uploads"  # Define the folder where uploaded files will be stored
+class InferenceResponse(BaseModel):
+    predicted_class_name: str
+    predicted_probability: float
+    plane_detail: str
 
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-
-def save_file_to_server(file: UploadFile) -> str:
-    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    with open(file_path, "wb") as f:
-        f.write(file.file.read())
-    return file_path
-
-@app.post("/upload")
+@app.post("/upload", response_model=InferenceResponse)
 async def upload_file(file: UploadFile = File(...)):
-    file_path = save_file_to_server(file)
-    print("File saved to:", file_path)
-    normalized_file_path = os.path.normpath(file_path)
-    print(normalized_file_path)
-    inference_single_image(normalized_file_path)
+    file_location = f"./uploads/{file.filename}"
+    with open(file_location, "wb+") as file_object:
+        file_object.write(file.file.read())
     
-    return {"filename": file.filename, "file_path": file_path}
+    inference_result = inference_single_image(file_location)
+    print (inference_result)
+    return inference_result
